@@ -1,6 +1,8 @@
 package dk.sdu.cbse.spaceship;
 
 import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.data.GameData;
+import dk.sdu.cbse.common.data.World;
 
 import java.awt.Graphics2D;
 
@@ -12,7 +14,12 @@ public class Spaceship extends Entity {
     }
     
     @Override
+    public void tick(GameData gameData, World world) {
+        x++;
+    }
+    
+    @Override
     public void paintComponent(Graphics2D g) {
-        g.drawRect(x, y, 20, 20);
+        g.drawRect(0, 0, 20, 20);
     }
 }

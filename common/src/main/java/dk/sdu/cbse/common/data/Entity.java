@@ -9,5 +9,6 @@ public abstract class Entity {
     public Entity() {
         System.out.println("Entity created");
     }
+    public abstract void tick(GameData gameData, World world);
     public abstract void paintComponent(Graphics2D g);
 }
