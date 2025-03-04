@@ -10,6 +10,15 @@
             "request": "attach",
             "hostName": "localhost",
             "port": "8000"
+        },
+        {
+            "type": "java",
+            "name": "Run Jar",
+            "request": "launch",
+            "mainClass": "",
+            "preLaunchTask": "build",
+            "projectName": "core",
+            "vmArgs": "--module-path=mods-mvn --module=core/dk.sdu.cbse.Main"
         }
     ]
 }
