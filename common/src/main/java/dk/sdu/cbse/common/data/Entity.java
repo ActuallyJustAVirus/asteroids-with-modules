@@ -3,8 +3,8 @@ package dk.sdu.cbse.common.data;
 import java.awt.Graphics2D;
 
 public abstract class Entity {
-    public int x;
-    public int y;
+    public double x;
+    public double y;
     public double rotation;
 
     public Entity() {

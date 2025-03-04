@@ -2,6 +2,7 @@ package dk.sdu.cbse;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyListener;
 import java.util.Collection;
 import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
@@ -50,6 +51,7 @@ public class Main {
         frame.setTitle("Asteroids");
         gameData = new GameData(800, 600);
         world = new World();
+        world.addEntity(gameData.getKeys());
         for (IGamePluginService iGamePluginService : getPluginServices()) {
             iGamePluginService.start(gameData, world);
         }
@@ -57,6 +59,19 @@ public class Main {
         for (Entity entity : world.getEntities()) {
             System.out.println(entity);
         }
+
+        // add key listener
+        frame.addKeyListener(new KeyListener() {
+            public void keyTyped(java.awt.event.KeyEvent e) {}
+
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                gameData.getKeys().press(e.getKeyCode());
+            }
+
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                gameData.getKeys().release(e.getKeyCode());
+            }
+        });
     }
 
     public void run() {
