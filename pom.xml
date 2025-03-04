@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>test</module>
+        <module>core</module>
     </modules>
     <properties>
         <java>java</java>
@@ -68,9 +68,8 @@
                         I still wanted to do it for clarity, but for some reason that results
                         in "java.lang.module.FindException: Module monitor.observer.zero not found";
                         strange... -->
-                        <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument>
-                        <argument>--module=test/dk.sdu.cbse.Main</argument>
-                        <argument>--add-modules javafx.graphics</argument>
+                        <!-- <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument> -->
+                        <argument>--module=core/dk.sdu.cbse.Main</argument>
                     </arguments>
                 </configuration>
             </plugin>
