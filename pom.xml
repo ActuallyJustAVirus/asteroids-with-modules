@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>spaceship</module>
         <module>common</module>
         <module>core</module>
     </modules>
