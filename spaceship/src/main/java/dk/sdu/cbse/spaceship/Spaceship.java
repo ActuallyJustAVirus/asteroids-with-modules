@@ -20,6 +20,6 @@ public class Spaceship extends Entity {
     
     @Override
     public void paintComponent(Graphics2D g) {
-        g.drawRect(0, 0, 20, 20);
+        g.drawRect(-10, -10, 20, 20);
     }
 }

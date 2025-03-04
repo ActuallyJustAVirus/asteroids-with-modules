@@ -34,11 +34,11 @@ public class Main {
             @Override
             public void paint(Graphics g) {
                 super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
                 for (Entity entity : world.getEntities()) {
-                    g.translate(entity.x, entity.y);
+                    Graphics2D g2d = (Graphics2D) g.create();
+                    g2d.translate(entity.x, entity.y);
+                    g2d.rotate(entity.rotation);
                     entity.paintComponent(g2d);
-                    g.translate(-entity.x, -entity.y);
                 }
             }
         };
