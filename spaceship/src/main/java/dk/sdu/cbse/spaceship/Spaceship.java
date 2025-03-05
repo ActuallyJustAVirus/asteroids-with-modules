@@ -16,23 +16,29 @@ public class Spaceship extends Entity {
     public Spaceship(int x, int y) {
         this.x = x;
         this.y = y;
-        this.rotation = 3.1415f / 2;
+        this.rotation = -3.1415f / 2;
+        this.radius = 60;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         image = toolkit.getImage(this.getClass().getClassLoader().getResource("spaceship.png"));
+    }
+
+    @Override
+    public void collide(Entity other, World world) {
+        System.out.println("Spaceship collided with " + other.getClass().getSimpleName());
     }
     
     @Override
     public void tick(GameData gameData, World world) {
         GameKeys keys = gameData.getKeys();
         if (keys.isDown(KeyEvent.VK_UP) || keys.isDown(KeyEvent.VK_W)) {
-            x += Math.cos(rotation) * 3;
-            y += Math.sin(rotation) * 3;
+            x += Math.cos(rotation) * 5;
+            y += Math.sin(rotation) * 5;
         }
         if (keys.isDown(KeyEvent.VK_LEFT) || keys.isDown(KeyEvent.VK_A)) {
-            rotation -= 0.1;
+            rotation -= 0.05;
         }
         if (keys.isDown(KeyEvent.VK_RIGHT) || keys.isDown(KeyEvent.VK_D)) {
-            rotation += 0.1;
+            rotation += 0.05;
         }
         if (rotation > Math.PI * 2) {
             rotation -= Math.PI * 2;
@@ -44,6 +50,7 @@ public class Spaceship extends Entity {
     @Override
     public void paintComponent(Graphics2D g) {
         g.rotate(Math.PI / 2);
-        g.drawImage(image, -50, -50, 100, 100, null);
+        g.translate(0, -60);
+        g.drawImage(image, -128, -128, 256, 256, null);
     }
 }

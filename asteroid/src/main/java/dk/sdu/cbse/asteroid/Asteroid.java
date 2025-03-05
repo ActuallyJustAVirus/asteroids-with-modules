@@ -14,9 +14,17 @@ public class Asteroid extends Entity {
     Image image;
 
     public Asteroid() {
+        radius = 16;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         image = toolkit.getImage(this.getClass().getClassLoader().getResource("asteroid.png"));
         rotateSpeed = (int) (Math.random() * 7) - 3;
+    }
+
+    @Override
+    public void collide(Entity other, World world) {
+        if (!(other instanceof Asteroid)) {
+            world.removeEntity(this);
+        }
     }
 
     @Override
