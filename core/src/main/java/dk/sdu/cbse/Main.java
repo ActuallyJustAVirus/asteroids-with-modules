@@ -51,7 +51,6 @@ public class Main {
         frame.setTitle("Asteroids");
         gameData = new GameData(800, 600);
         world = new World();
-        world.addEntity(gameData.getKeys());
         for (IGamePluginService iGamePluginService : getPluginServices()) {
             iGamePluginService.start(gameData, world);
         }
