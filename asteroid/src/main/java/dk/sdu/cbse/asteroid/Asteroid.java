@@ -12,8 +12,10 @@ public class Asteroid extends Entity {
     int rotateSpeed = 1;
     double visualRotation = 0;
     Image image;
+    AsteroidPlugin plugin;
 
-    public Asteroid() {
+    public Asteroid(AsteroidPlugin plugin) {
+        this.plugin = plugin;
         radius = 16;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         image = toolkit.getImage(this.getClass().getClassLoader().getResource("asteroid.png"));
@@ -23,7 +25,7 @@ public class Asteroid extends Entity {
     @Override
     public void collide(Entity other, World world) {
         if (!(other instanceof Asteroid)) {
-            world.removeEntity(this);
+            plugin.destroyAsteroid(world, this);
         }
     }
 
