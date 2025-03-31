@@ -3,14 +3,13 @@ package dk.sdu.cbse.asteroid;
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
 import dk.sdu.cbse.common.service.IProcessService;
 
 public class AsteroidPlugin implements IProcessService, IGamePluginService {
-    List<Asteroid> asteroids = new ArrayList<>();
+    private static List<Asteroid> asteroids = new ArrayList<>();
 
 
     private void createAsteroid(GameData gameData, World world) {
@@ -53,6 +52,7 @@ public class AsteroidPlugin implements IProcessService, IGamePluginService {
         }
         for (int i = 0; i < asteroids.size(); i++) {
             Asteroid asteroid = asteroids.get(i);
+            asteroid.tick(gameData, world);
             if (asteroid.x < 0 || asteroid.x > gameData.getDisplayWidth()
                || asteroid.y < 0 || asteroid.y > gameData.getDisplayHeight()) {
                 removeAsteroid(world, asteroid);

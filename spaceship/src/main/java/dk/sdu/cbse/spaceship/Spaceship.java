@@ -13,21 +13,13 @@ import java.awt.event.KeyEvent;
 public class Spaceship extends Entity {
     Image image;
     
-    public Spaceship(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Spaceship() {
         this.rotation = -3.1415f / 2;
         this.radius = 60;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         image = toolkit.getImage(this.getClass().getClassLoader().getResource("spaceship.png"));
     }
 
-    @Override
-    public void collide(Entity other, World world) {
-        System.out.println("Spaceship collided with " + other.getClass().getSimpleName());
-    }
-    
-    @Override
     public void tick(GameData gameData, World world) {
         GameKeys keys = gameData.getKeys();
         if (keys.isDown(KeyEvent.VK_UP) || keys.isDown(KeyEvent.VK_W)) {

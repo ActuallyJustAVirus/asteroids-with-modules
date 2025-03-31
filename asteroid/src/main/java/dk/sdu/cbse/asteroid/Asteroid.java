@@ -22,14 +22,6 @@ public class Asteroid extends Entity {
         rotateSpeed = (int) (Math.random() * 7) - 3;
     }
 
-    @Override
-    public void collide(Entity other, World world) {
-        if (!(other instanceof Asteroid)) {
-            plugin.destroyAsteroid(world, this);
-        }
-    }
-
-    @Override
     public void tick(GameData gameData, World world) {
         x += Math.cos(rotation);
         y += Math.sin(rotation);

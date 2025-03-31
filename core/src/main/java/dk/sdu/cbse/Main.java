@@ -78,9 +78,6 @@ public class Main {
     }
 
     public void run() {
-        for (Entity entity : world.getEntities()) {
-            entity.tick(gameData, world);
-        }
         for (IProcessService iProcessService : processServices) {
             iProcessService.process(gameData, world);
         }
