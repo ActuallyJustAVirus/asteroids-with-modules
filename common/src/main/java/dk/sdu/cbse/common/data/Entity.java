@@ -17,5 +17,8 @@ public abstract class Entity {
     public String getID() {
         return ID.toString();
     }
+    public boolean collidesWith(Entity other) {
+        return collidable && other.collidable && (Math.abs(x - other.x) < radius + other.radius) && (Math.abs(y - other.y) < radius + other.radius);
+    }
     public abstract void paintComponent(Graphics2D g);
 }

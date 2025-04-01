@@ -13,6 +13,7 @@ public class Asteroid extends Entity {
     double visualRotation = 0;
     Image image;
     AsteroidPlugin plugin;
+    boolean destroyed = false;
 
     public Asteroid(AsteroidPlugin plugin) {
         this.plugin = plugin;
@@ -23,6 +24,16 @@ public class Asteroid extends Entity {
     }
 
     public void tick(GameData gameData, World world) {
+        if (destroyed) {
+            plugin.destroyAsteroid(world, this);
+            return;
+        }
+        for (Entity entity : world.getEntities()) {
+            if (entity != this && collidesWith(entity)) {
+                destroyed = true;
+                return;
+            }
+        }
         x += Math.cos(rotation);
         y += Math.sin(rotation);
         visualRotation += rotateSpeed * 0.01;
@@ -35,6 +46,9 @@ public class Asteroid extends Entity {
 
     @Override
     public void paintComponent(Graphics2D g) {
+        if (destroyed) {
+            return;
+        }
         g.rotate(visualRotation);
         g.drawImage(image, -16, -16, 32, 32, null);
     }
