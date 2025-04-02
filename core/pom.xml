@@ -9,7 +9,7 @@
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
     <dependencies>
-            <dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>common</artifactId>
             <version>${project.version}</version>
