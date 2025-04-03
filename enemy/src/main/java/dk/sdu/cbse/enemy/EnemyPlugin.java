@@ -28,7 +28,7 @@ public class EnemyPlugin implements IGamePluginService, IProcessService {
         ArrayList<Entity> targets = new ArrayList<>();
         for (Entity entity : world.getEntities()) {
             if (entity instanceof Spaceship) {
-                if (!enemies.contains(entity)) {
+                if (enemies.contains(entity)) {
                     continue;
                 }
                 targets.add(entity);
@@ -47,7 +47,35 @@ public class EnemyPlugin implements IGamePluginService, IProcessService {
 
         // Process all enemies
         for (Spaceship enemy : enemies) {
-            enemy.tick(gameData, world);
+            if (targets.isEmpty()) {
+                break;
+            }
+            Entity target = targets.get((int) (Math.random() * targets.size()));
+            double desiredRotation = Math.atan2(target.y - enemy.y, target.x - enemy.x);
+            if (desiredRotation < 0) {
+                desiredRotation += Math.PI * 2;
+            }
+            double rotationDiff = desiredRotation - enemy.rotation;
+            boolean forward = false;
+            boolean left = false;
+            boolean right = false;
+            if (Math.abs(rotationDiff) < 0.05) {
+                enemy.rotation = desiredRotation;
+            } else if (rotationDiff > 0) {
+                if (rotationDiff < Math.PI) {
+                    right = true;
+                } else {
+                    left = true;
+                }
+            } else {
+                if (rotationDiff > -Math.PI) {
+                    left = true;
+                } else {
+                    right = true;
+                }
+            }
+            enemy.tick(forward, left, right);
+
         }
     }
 }

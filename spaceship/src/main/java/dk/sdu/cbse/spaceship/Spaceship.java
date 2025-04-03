@@ -1,14 +1,10 @@
 package dk.sdu.cbse.spaceship;
 
 import dk.sdu.cbse.common.data.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.GameKeys;
-import dk.sdu.cbse.common.data.World;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 
 public class Spaceship extends Entity {
     Image image;
@@ -20,16 +16,15 @@ public class Spaceship extends Entity {
         image = toolkit.getImage(this.getClass().getClassLoader().getResource("spaceship.png"));
     }
 
-    public void tick(GameData gameData, World world) {
-        GameKeys keys = gameData.getKeys();
-        if (keys.isDown(KeyEvent.VK_UP) || keys.isDown(KeyEvent.VK_W)) {
+    public void tick(boolean forward, boolean left, boolean right) {
+        if (forward) {
             x += Math.cos(rotation) * 5;
             y += Math.sin(rotation) * 5;
         }
-        if (keys.isDown(KeyEvent.VK_LEFT) || keys.isDown(KeyEvent.VK_A)) {
+        if (left) {
             rotation -= 0.05;
         }
-        if (keys.isDown(KeyEvent.VK_RIGHT) || keys.isDown(KeyEvent.VK_D)) {
+        if (right) {
             rotation += 0.05;
         }
         if (rotation > Math.PI * 2) {

@@ -1,6 +1,9 @@
 package dk.sdu.cbse.spaceship;
 
+import java.awt.event.KeyEvent;
+
 import dk.sdu.cbse.common.data.GameData;
+import dk.sdu.cbse.common.data.GameKeys;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
 import dk.sdu.cbse.common.service.IProcessService;
@@ -24,6 +27,10 @@ public class SpaceshipPlugin implements IGamePluginService, IProcessService {
     
     @Override
     public void process(GameData gameData, World world) {
-        spaceship.tick(gameData, world);
+        GameKeys keys = gameData.getKeys();
+        boolean forward = keys.isDown(KeyEvent.VK_UP) || keys.isDown(KeyEvent.VK_W);
+        boolean left = keys.isDown(KeyEvent.VK_LEFT) || keys.isDown(KeyEvent.VK_A);
+        boolean right = keys.isDown(KeyEvent.VK_RIGHT) || keys.isDown(KeyEvent.VK_D);
+        spaceship.tick(forward, left, right);
     }
 }
