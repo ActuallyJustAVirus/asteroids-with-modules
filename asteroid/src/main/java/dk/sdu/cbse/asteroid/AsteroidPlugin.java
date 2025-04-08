@@ -6,9 +6,8 @@ import java.util.List;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
-import dk.sdu.cbse.common.service.IProcessService;
 
-public class AsteroidPlugin implements IProcessService, IGamePluginService {
+public class AsteroidPlugin implements IGamePluginService {
     private static List<Asteroid> asteroids = new ArrayList<>();
 
 

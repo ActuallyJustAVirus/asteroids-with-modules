@@ -15,14 +15,13 @@ import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
-import dk.sdu.cbse.common.service.IProcessService;
 
 public class Main {
     JFrame frame;
     GameData gameData;
     World world;
     JPanel panel;
-    Collection<IProcessService> processServices = new ArrayList<>();
+    Collection<IGamePluginService> gamePlugins = new ArrayList<>();
 
     public static void main(String[] args) throws InterruptedException {
         Main main = new Main();
@@ -54,10 +53,10 @@ public class Main {
         frame.setTitle("Asteroids");
         gameData = new GameData(800, 600);
         world = new World();
-        for (IGamePluginService iGamePluginService : getPluginServices()) {
-            iGamePluginService.start(gameData, world);
+        gamePlugins = (Collection<IGamePluginService>) getPluginServices();
+        for (IGamePluginService gamePlugin : gamePlugins) {
+            gamePlugin.start(gameData, world);
         }
-        processServices = (Collection<IProcessService>) getProcessServices();
         // print entities
         for (Entity entity : world.getEntities()) {
             System.out.println(entity);
@@ -78,17 +77,12 @@ public class Main {
     }
 
     public void run() {
-        for (IProcessService iProcessService : processServices) {
-            iProcessService.process(gameData, world);
+        for (IGamePluginService plugin : gamePlugins) {
+            plugin.process(gameData, world);
         }
     }
 
-
-    private Collection<? extends IGamePluginService> getPluginServices() {
+    private Collection<IGamePluginService> getPluginServices() {
         return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private Collection<? extends IProcessService> getProcessServices() {
-        return ServiceLoader.load(IProcessService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

@@ -6,10 +6,9 @@ import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
-import dk.sdu.cbse.common.service.IProcessService;
 import dk.sdu.cbse.spaceship.Spaceship;
 
-public class EnemyPlugin implements IGamePluginService, IProcessService {
+public class EnemyPlugin implements IGamePluginService {
     private static ArrayList<Spaceship> enemies = new ArrayList<>();
     // private static ArrayList<Entity> targets = new ArrayList<>();
     

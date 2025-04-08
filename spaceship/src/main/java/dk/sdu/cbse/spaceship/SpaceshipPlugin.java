@@ -6,9 +6,8 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.GameKeys;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
-import dk.sdu.cbse.common.service.IProcessService;
 
-public class SpaceshipPlugin implements IGamePluginService, IProcessService {
+public class SpaceshipPlugin implements IGamePluginService {
     private static Spaceship spaceship;
 
     @Override

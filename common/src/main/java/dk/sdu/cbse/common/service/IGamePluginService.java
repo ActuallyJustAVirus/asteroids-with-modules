@@ -13,6 +13,15 @@ public interface IGamePluginService {
     void start(GameData gameData, World world);
 
     /**
+     * Process the game data and world state.
+     * This method is called every frame to update the game state.
+     *
+     * @param gameData The current game data.
+     * @param world    The current world state.
+     */
+    void process(GameData gameData, World world);
+
+    /**
      * This method is called when the game stops. It is used to clean up the plugin and remove entities from the world.
      *
      * @param gameData The game data object containing information about the game state.
