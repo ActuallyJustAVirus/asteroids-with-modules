@@ -8,7 +8,7 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
 
 public class AsteroidPlugin implements IGamePluginService {
-    private static List<Asteroid> asteroids = new ArrayList<>();
+    private List<Asteroid> asteroids = new ArrayList<>();
 
 
     private void createAsteroid(GameData gameData, World world) {

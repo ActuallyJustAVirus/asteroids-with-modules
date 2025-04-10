@@ -8,7 +8,7 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
 
 public class SpaceshipPlugin implements IGamePluginService {
-    private static Spaceship spaceship;
+    private Spaceship spaceship;
 
     @Override
     public void start(GameData gameData, World world) {

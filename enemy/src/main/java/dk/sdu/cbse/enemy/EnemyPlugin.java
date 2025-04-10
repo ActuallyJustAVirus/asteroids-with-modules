@@ -9,8 +9,7 @@ import dk.sdu.cbse.common.service.IGamePluginService;
 import dk.sdu.cbse.spaceship.Spaceship;
 
 public class EnemyPlugin implements IGamePluginService {
-    private static ArrayList<Spaceship> enemies = new ArrayList<>();
-    // private static ArrayList<Entity> targets = new ArrayList<>();
+    private ArrayList<Spaceship> enemies = new ArrayList<>();
     
     @Override
     public void start(GameData gameData, World world) {
