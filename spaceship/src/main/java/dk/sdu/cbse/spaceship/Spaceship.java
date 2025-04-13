@@ -8,12 +8,28 @@ import java.awt.Toolkit;
 
 public class Spaceship extends Entity {
     Image image;
+    IWeaponService weapon;
     
     public Spaceship() {
         this.rotation = -3.1415f / 2;
         this.radius = 60;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         image = toolkit.getImage(this.getClass().getClassLoader().getResource("spaceship.png"));
+    }
+
+    public void setWeapon(IWeaponService weapon) {
+        this.weapon = weapon;
+        weapon.setSpaceship(this);
+    }
+
+    public IWeaponService getWeapon() {
+        return weapon;
+    }
+
+    public void fireWeapon() {
+        if (weapon != null) {
+            weapon.fireWeapon(x, y, rotation);
+        }
     }
 
     public void tick(boolean forward, boolean left, boolean right) {

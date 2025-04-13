@@ -16,6 +16,7 @@
         <module>core</module>
         <module>enemy</module>
         <module>asteroid-splitter</module>
+        <module>cannon</module>
     </modules>
     <properties>
         <java>java</java>
