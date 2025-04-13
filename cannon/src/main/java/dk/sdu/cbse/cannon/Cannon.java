@@ -8,8 +8,8 @@ public class Cannon implements IWeaponService {
     
     @Override
     public void fireWeapon(double x, double y, double rotation) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'fireWeapon'");
+        CannonBullet bullet = new CannonBullet(x, y, rotation);
+        CannonPlugin.addBullet(bullet);
     }
 
     @Override

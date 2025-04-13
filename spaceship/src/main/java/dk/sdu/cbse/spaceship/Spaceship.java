@@ -28,6 +28,8 @@ public class Spaceship extends Entity {
 
     public void fireWeapon() {
         if (weapon != null) {
+            double x = this.x + Math.cos(rotation) * 100;
+            double y = this.y + Math.sin(rotation) * 100;
             weapon.fireWeapon(x, y, rotation);
         }
     }
