@@ -16,6 +16,14 @@
             "name": "Run Jar",
             "request": "launch",
             "mainClass": "",
+            "projectName": "core",
+            "vmArgs": "--module-path=mods-mvn --module=core/dk.sdu.cbse.Main"
+        },
+        {
+            "type": "java",
+            "name": "Build and run",
+            "request": "launch",
+            "mainClass": "",
             "preLaunchTask": "build",
             "projectName": "core",
             "vmArgs": "--module-path=mods-mvn --module=core/dk.sdu.cbse.Main"
