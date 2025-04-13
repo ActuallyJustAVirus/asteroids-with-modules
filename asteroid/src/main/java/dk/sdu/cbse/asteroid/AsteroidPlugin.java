@@ -12,7 +12,7 @@ public class AsteroidPlugin implements IGamePluginService {
 
 
     private void createAsteroid(GameData gameData, World world) {
-        Asteroid asteroid = new Asteroid(this);
+        Asteroid asteroid = new Asteroid(this, (int) (Math.random() * 3 + 1));
         asteroid.x = (float) (Math.random() * gameData.getDisplayWidth());
         asteroid.y = (float) (Math.random() * gameData.getDisplayHeight());
         asteroid.rotation = Math.random() * 2d * Math.PI;
@@ -20,11 +20,16 @@ public class AsteroidPlugin implements IGamePluginService {
         asteroids.add(asteroid);
     }
 
-    private void removeAsteroid(World world, Asteroid asteroid) {
+    public void addAsteroid(World world, Asteroid asteroid) {
+        world.addEntity(asteroid);
+        asteroids.add(asteroid);
+    }
+
+    public void removeAsteroid(World world, Asteroid asteroid) {
         world.removeEntity(asteroid);
         asteroids.remove(asteroid);
     }
-
+    
     void destroyAsteroid(World world, Asteroid asteroid) {
         removeAsteroid(world, asteroid);
     }

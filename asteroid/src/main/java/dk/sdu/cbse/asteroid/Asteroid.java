@@ -14,10 +14,12 @@ public class Asteroid extends Entity {
     Image image;
     AsteroidPlugin plugin;
     boolean destroyed = false;
+    int size;
 
-    public Asteroid(AsteroidPlugin plugin) {
+    public Asteroid(AsteroidPlugin plugin, int size) {
         this.plugin = plugin;
-        radius = 16;
+        this.size = size;
+        radius = 13 * size;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         image = toolkit.getImage(this.getClass().getClassLoader().getResource("asteroid.png"));
         rotateSpeed = (int) (Math.random() * 7) - 3;
@@ -50,7 +52,23 @@ public class Asteroid extends Entity {
             return;
         }
         g.rotate(visualRotation);
+        g.scale(size, size);
         g.drawImage(image, -16, -16, 32, 32, null);
     }
+
+    public AsteroidPlugin getPlugin() {
+        return plugin;
+    }
     
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getSize() {
+        return size;
+    }
 }
