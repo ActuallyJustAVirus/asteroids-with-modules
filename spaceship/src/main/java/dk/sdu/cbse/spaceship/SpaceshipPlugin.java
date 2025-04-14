@@ -3,6 +3,7 @@ package dk.sdu.cbse.spaceship;
 import java.awt.event.KeyEvent;
 import java.util.ServiceLoader;
 
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.GameKeys;
 import dk.sdu.cbse.common.data.World;
@@ -32,6 +33,9 @@ public class SpaceshipPlugin implements IGamePluginService {
     
     @Override
     public void process(GameData gameData, World world) {
+        if (spaceship == null) {
+            return;
+        }
         GameKeys keys = gameData.getKeys();
         boolean forward = keys.isDown(KeyEvent.VK_UP) || keys.isDown(KeyEvent.VK_W);
         boolean left = keys.isDown(KeyEvent.VK_LEFT) || keys.isDown(KeyEvent.VK_A);
@@ -40,6 +44,21 @@ public class SpaceshipPlugin implements IGamePluginService {
         spaceship.tick(forward, left, right);
         if (fire) {
             spaceship.fireWeapon();
+        }
+
+        for (Entity entity : world.getEntities()) {
+            if (spaceship.getID().equals(entity.getID())) {
+                continue;
+            }
+            if (spaceship.collidesWith(entity)) {
+                spaceship.invulnerableTime = 400;
+                spaceship.health--;
+                if (spaceship.health <= 0) {
+                    world.removeEntity(spaceship);
+                    spaceship = null;
+                    break;
+                }
+            }
         }
     }
 }
