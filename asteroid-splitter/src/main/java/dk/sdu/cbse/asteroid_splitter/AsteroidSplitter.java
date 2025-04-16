@@ -29,8 +29,8 @@ public class AsteroidSplitter implements IGamePluginService {
                 double splitRotation = Math.random() * 2d * Math.PI;
                 for (int i = 0; i < 2; i++) {
                     Asteroid newAsteroid = new Asteroid(asteroid.getPlugin(), size - 1);
-                    newAsteroid.x = asteroid.x + Math.cos(splitRotation + (i * Math.PI / 2)) * asteroid.radius;
-                    newAsteroid.y = asteroid.y + Math.sin(splitRotation + (i * Math.PI / 2)) * asteroid.radius;
+                    newAsteroid.x = asteroid.x + Math.cos(splitRotation + (i * Math.PI / 2)) * (asteroid.radius + 2);
+                    newAsteroid.y = asteroid.y + Math.sin(splitRotation + (i * Math.PI / 2)) * (asteroid.radius + 2);
                     newAsteroid.rotation = splitRotation + (i * Math.PI);
                     asteroid.getPlugin().addAsteroid(world, newAsteroid);
                 }

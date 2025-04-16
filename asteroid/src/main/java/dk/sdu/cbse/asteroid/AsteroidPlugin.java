@@ -13,9 +13,26 @@ public class AsteroidPlugin implements IGamePluginService {
 
     private void createAsteroid(GameData gameData, World world) {
         Asteroid asteroid = new Asteroid(this, (int) (Math.random() * 3 + 1));
-        asteroid.x = (float) (Math.random() * gameData.getDisplayWidth());
-        asteroid.y = (float) (Math.random() * gameData.getDisplayHeight());
-        asteroid.rotation = Math.random() * 2d * Math.PI;
+        if (Math.random() < 0.5) {
+            asteroid.x = (float) (Math.random() * gameData.getDisplayWidth());
+            if (Math.random() < 0.5) {
+                asteroid.y = 0;
+                asteroid.rotation = 0;
+            } else {
+                asteroid.y = gameData.getDisplayHeight();
+                asteroid.rotation = Math.PI;
+            }
+        } else {
+            asteroid.y = (float) (Math.random() * gameData.getDisplayHeight());
+            if (Math.random() < 0.5) {
+                asteroid.x = 0;
+                asteroid.rotation = -Math.PI / 2;
+            } else {
+                asteroid.x = gameData.getDisplayWidth();
+                asteroid.rotation = Math.PI / 2;
+            }
+        }
+        asteroid.rotation += Math.random() * Math.PI;
         world.addEntity(asteroid);
         asteroids.add(asteroid);
     }
