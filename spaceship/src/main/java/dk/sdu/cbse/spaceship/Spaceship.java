@@ -16,10 +16,11 @@ public class Spaceship extends Entity {
     IWeaponService weapon;
     int invulnerableTime = 0;
     int health = 3;
+    public boolean destroyed;
     
     public Spaceship() {
         this.rotation = -3.1415f / 2;
-        this.radius = 60;
+        this.radius = 20;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         image = toolkit.getImage(this.getClass().getClassLoader().getResource("spaceship.png"));
         ImageFilter whiteFilter= new RGBImageFilter() {
@@ -85,11 +86,11 @@ public class Spaceship extends Entity {
     @Override
     public void paintComponent(Graphics2D g) {
         g.rotate(Math.PI / 2);
-        g.translate(0, -60);
+        g.translate(0, -10);
         if (invulnerableTime % 15 > 12) {
-            g.drawImage(whiteImage, -128, -128, 256, 256, null);
+            g.drawImage(whiteImage, -25, -25, 50, 50, null);
         } else {
-            g.drawImage(image, -128, -128, 256, 256, null);
+            g.drawImage(image, -25, -25, 50, 50, null);
         }
     }
 }

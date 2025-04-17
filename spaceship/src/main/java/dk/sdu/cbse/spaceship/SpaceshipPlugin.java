@@ -33,7 +33,8 @@ public class SpaceshipPlugin implements IGamePluginService {
     
     @Override
     public void process(GameData gameData, World world) {
-        if (spaceship == null) {
+        if (spaceship.destroyed) {
+            world.removeEntity(spaceship);
             return;
         }
         GameKeys keys = gameData.getKeys();
@@ -51,13 +52,12 @@ public class SpaceshipPlugin implements IGamePluginService {
                 continue;
             }
             if (spaceship.collidesWith(entity)) {
-                spaceship.invulnerableTime = 400;
+                spaceship.invulnerableTime = 200;
                 spaceship.health--;
                 if (spaceship.health <= 0) {
-                    world.removeEntity(spaceship);
-                    spaceship = null;
-                    break;
+                    spaceship.destroyed = true;
                 }
+                break;
             }
         }
     }
