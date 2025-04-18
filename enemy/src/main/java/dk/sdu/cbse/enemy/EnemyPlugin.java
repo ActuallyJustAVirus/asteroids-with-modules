@@ -44,7 +44,14 @@ public class EnemyPlugin implements IGamePluginService {
         }
 
         // Process all enemies
-        for (Spaceship enemy : enemies) {
+        for (int i = 0; i < enemies.size(); i++) {
+            Spaceship enemy = enemies.get(i);
+            if (enemy.destroyed) {
+                world.removeEntity(enemy);
+                enemies.remove(enemy);
+                i--;
+                continue;
+            }
             if (targets.isEmpty()) {
                 break;
             }
@@ -72,7 +79,8 @@ public class EnemyPlugin implements IGamePluginService {
                     right = true;
                 }
             }
-            enemy.tick(forward, left, right);
+            enemy.tick(gameData, world);
+            enemy.move(forward, left, right);
 
         }
     }

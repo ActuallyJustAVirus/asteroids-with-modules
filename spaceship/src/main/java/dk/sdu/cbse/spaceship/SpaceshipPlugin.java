@@ -33,32 +33,15 @@ public class SpaceshipPlugin implements IGamePluginService {
     
     @Override
     public void process(GameData gameData, World world) {
-        if (spaceship.destroyed) {
-            world.removeEntity(spaceship);
-            return;
-        }
         GameKeys keys = gameData.getKeys();
         boolean forward = keys.isDown(KeyEvent.VK_UP) || keys.isDown(KeyEvent.VK_W);
         boolean left = keys.isDown(KeyEvent.VK_LEFT) || keys.isDown(KeyEvent.VK_A);
         boolean right = keys.isDown(KeyEvent.VK_RIGHT) || keys.isDown(KeyEvent.VK_D);
         boolean fire = keys.isDown(KeyEvent.VK_SPACE);
-        spaceship.tick(forward, left, right);
+        spaceship.tick(gameData, world);
+        spaceship.move(forward, left, right);
         if (fire) {
             spaceship.fireWeapon();
-        }
-
-        for (Entity entity : world.getEntities()) {
-            if (spaceship.getID().equals(entity.getID())) {
-                continue;
-            }
-            if (spaceship.collidesWith(entity)) {
-                spaceship.invulnerableTime = 200;
-                spaceship.health--;
-                if (spaceship.health <= 0) {
-                    spaceship.destroyed = true;
-                }
-                break;
-            }
         }
     }
 }

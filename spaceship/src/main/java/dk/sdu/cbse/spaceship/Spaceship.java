@@ -1,6 +1,8 @@
 package dk.sdu.cbse.spaceship;
 
 import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.data.GameData;
+import dk.sdu.cbse.common.data.World;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -47,17 +49,37 @@ public class Spaceship extends Entity {
     }
 
     public void fireWeapon() {
-        if (weapon != null) {
-            double x = this.x + Math.cos(rotation) * 100;
-            double y = this.y + Math.sin(rotation) * 100;
+        if (weapon != null && !destroyed) {
+            double x = this.x + Math.cos(rotation) * 40;
+            double y = this.y + Math.sin(rotation) * 40;
             weapon.fireWeapon(x, y, rotation);
         }
     }
 
-    public void tick(boolean forward, boolean left, boolean right) {
+    public void tick(GameData gameData, World world) {
         if (invulnerableTime > 0) {
             invulnerableTime--;
         }
+        if (destroyed) {
+            world.removeEntity(this);
+            return;
+        }
+        for (Entity entity : world.getEntities()) {
+            if (this.getID().equals(entity.getID())) {
+                continue;
+            }
+            if (this.collidesWith(entity)) {
+                this.invulnerableTime = 200;
+                this.health--;
+                if (this.health <= 0) {
+                    this.destroyed = true;
+                }
+                break;
+            }
+        }
+    }
+
+    public void move(boolean forward, boolean left, boolean right) {
         if (forward) {
             x += Math.cos(rotation) * 5;
             y += Math.sin(rotation) * 5;
