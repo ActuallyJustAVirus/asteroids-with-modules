@@ -52,36 +52,36 @@ public class EnemyPlugin implements IGamePluginService {
                 i--;
                 continue;
             }
-            if (targets.isEmpty()) {
-                break;
-            }
-            Entity target = targets.get((int) (Math.random() * targets.size()));
-            double desiredRotation = Math.atan2(target.y - enemy.y, target.x - enemy.x);
-            if (desiredRotation < 0) {
-                desiredRotation += Math.PI * 2;
-            }
-            double rotationDiff = desiredRotation - enemy.rotation;
-            boolean forward = false;
-            boolean left = false;
-            boolean right = false;
-            if (Math.abs(rotationDiff) < 0.05) {
-                enemy.rotation = desiredRotation;
-            } else if (rotationDiff > 0) {
-                if (rotationDiff < Math.PI) {
-                    right = true;
-                } else {
-                    left = true;
+            if (!targets.isEmpty()) {
+                
+                Entity target = targets.get((int) (Math.random() * targets.size()));
+                double desiredRotation = Math.atan2(target.y - enemy.y, target.x - enemy.x);
+                if (desiredRotation < 0) {
+                    desiredRotation += Math.PI * 2;
                 }
-            } else {
-                if (rotationDiff > -Math.PI) {
-                    left = true;
+                double rotationDiff = desiredRotation - enemy.rotation;
+                boolean forward = false;
+                boolean left = false;
+                boolean right = false;
+                if (Math.abs(rotationDiff) < 0.05) {
+                    enemy.rotation = desiredRotation;
+                } else if (rotationDiff > 0) {
+                    if (rotationDiff < Math.PI) {
+                        right = true;
+                    } else {
+                        left = true;
+                    }
                 } else {
-                    right = true;
+                    if (rotationDiff > -Math.PI) {
+                        left = true;
+                    } else {
+                        right = true;
+                    }
                 }
+                enemy.move(forward, left, right);
+                enemy.fireWeapon();
             }
             enemy.tick(gameData, world);
-            enemy.move(forward, left, right);
-
         }
     }
 }
