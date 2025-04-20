@@ -64,6 +64,16 @@ public class Spaceship extends Entity {
             world.removeEntity(this);
             return;
         }
+        if (this.x < 0) {
+            this.x = gameData.getDisplayWidth();
+        } else if (this.x > gameData.getDisplayWidth()) {
+            this.x = 0;
+        }
+        if (this.y < 0) {
+            this.y = gameData.getDisplayHeight();
+        } else if (this.y > gameData.getDisplayHeight()) {
+            this.y = 0;
+        }
         for (Entity entity : world.getEntities()) {
             if (this.getID().equals(entity.getID())) {
                 continue;
