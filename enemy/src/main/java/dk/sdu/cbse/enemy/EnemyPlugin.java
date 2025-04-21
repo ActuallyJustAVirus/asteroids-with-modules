@@ -1,19 +1,26 @@
 package dk.sdu.cbse.enemy;
 
 import java.util.ArrayList;
+import java.util.ServiceLoader;
 
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
+import dk.sdu.cbse.spaceship.IWeaponService;
 import dk.sdu.cbse.spaceship.Spaceship;
 
 public class EnemyPlugin implements IGamePluginService {
     private ArrayList<Spaceship> enemies = new ArrayList<>();
+    private IWeaponService weaponService;
     
     @Override
     public void start(GameData gameData, World world) {
-        
+        ServiceLoader<IWeaponService> weaponServices = ServiceLoader.load(IWeaponService.class);
+        for (IWeaponService weaponService : weaponServices) {
+            this.weaponService = weaponService;
+            break; // Assuming only one weapon service is needed
+        }
     }
     
     @Override
@@ -39,6 +46,7 @@ public class EnemyPlugin implements IGamePluginService {
             enemy.x = Math.random() * gameData.getDisplayWidth();
             enemy.y = Math.random() * gameData.getDisplayHeight();
             enemy.rotation = Math.random() * Math.PI * 2;
+            enemy.setWeapon(weaponService);
             enemies.add(enemy);
             world.addEntity(enemy);
         }
