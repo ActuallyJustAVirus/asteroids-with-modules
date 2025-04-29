@@ -86,8 +86,12 @@ public class EnemyPlugin implements IGamePluginService {
                         right = true;
                     }
                 }
+                if (Math.abs(enemy.x - target.x) < 250 && Math.abs(enemy.y - target.y) < 250) {
+                    enemy.fireWeapon();
+                } else {
+                    forward = true;
+                }
                 enemy.move(forward, left, right);
-                enemy.fireWeapon();
             }
             enemy.tick(gameData, world);
         }

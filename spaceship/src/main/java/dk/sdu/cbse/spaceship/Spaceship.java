@@ -18,6 +18,8 @@ public class Spaceship extends Entity {
     IWeaponService weapon;
     int invulnerableTime = 0;
     int health = 3;
+    double xVelocity = 0;
+    double yVelocity = 0;
     public boolean destroyed;
     
     public Spaceship() {
@@ -64,6 +66,10 @@ public class Spaceship extends Entity {
             world.removeEntity(this);
             return;
         }
+        xVelocity *= 0.9;
+        yVelocity *= 0.9;
+        x += xVelocity;
+        y += yVelocity;
         if (this.x < 0) {
             this.x = gameData.getDisplayWidth();
         } else if (this.x > gameData.getDisplayWidth()) {
@@ -91,8 +97,8 @@ public class Spaceship extends Entity {
 
     public void move(boolean forward, boolean left, boolean right) {
         if (forward) {
-            x += Math.cos(rotation) * 5;
-            y += Math.sin(rotation) * 5;
+            xVelocity += Math.cos(rotation);
+            yVelocity += Math.sin(rotation);
         }
         if (left) {
             rotation -= 0.05;
