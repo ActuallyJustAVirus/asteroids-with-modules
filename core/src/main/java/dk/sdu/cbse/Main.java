@@ -15,6 +15,8 @@ import static java.util.stream.Collectors.toList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
@@ -28,7 +30,13 @@ public class Main {
     Collection<IGamePluginService> gamePlugins = new ArrayList<>();
 
     public static void main(String[] args) throws InterruptedException {
-        Main main = new Main();
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(ModuleConfig.class);
+
+        for (String beanName : ctx.getBeanDefinitionNames()) {
+            System.out.println(beanName);
+        }
+        
+        Main main = ctx.getBean(Main.class);
         while (true) {
             main.run();
             main.panel.repaint();
@@ -36,7 +44,8 @@ public class Main {
         }
     }
 
-    public Main() {
+    public Main(Collection<IGamePluginService> gamePlugins) {
+        this.gamePlugins = gamePlugins;
         panel = new JPanel() {
             @Override
             public void paint(Graphics g) {
@@ -59,8 +68,8 @@ public class Main {
         world = new World();
 
         // load plugins
-        ModuleLayer layer = createLayer();
-        gamePlugins = getPluginServices(layer);
+        // ModuleLayer layer = createLayer();
+        // gamePlugins = getPluginServices(layer);
         for (IGamePluginService gamePlugin : gamePlugins) {
             System.out.println("Found plugin: " + gamePlugin.getClass().getName());
             gamePlugin.start(gameData, world);
