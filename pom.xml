@@ -17,6 +17,7 @@
         <module>enemy</module>
         <module>asteroid-splitter</module>
         <module>cannon</module>
+        <module>asteroid2</module>
     </modules>
     <properties>
         <java>java</java>
@@ -102,7 +103,7 @@
                                     <directory>mods-mvn</directory>
                                 </fileset>
                                 <fileset>
-                                    <directory>libs</directory>
+                                    <directory>mods-mvn2</directory>
                                 </fileset>
                             </filesets>
                         </configuration>
@@ -116,6 +117,7 @@
             <activation>
                 <file>
                     <exists>src</exists>
+                    <missing>split-package</missing>
                 </file>
             </activation>
             <build>
@@ -140,6 +142,43 @@
                                         </artifactItem>
                                     </artifactItems>
                                     <outputDirectory>../mods-mvn</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- child projects should copy artifact into 'mods-mvn2' -->
+            <id>split-package-project</id>
+            <activation>
+                <file>
+                    <exists>split-package</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.0.2</version>
+                        <executions>
+                            <execution>
+                                <id>copy-installed</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>${project.groupId}</groupId>
+                                            <artifactId>${project.artifactId}</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>jar</type>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>../mods-mvn2</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>

@@ -3,8 +3,12 @@ package dk.sdu.cbse;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
+import java.lang.module.Configuration;
+import java.lang.module.ModuleFinder;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
@@ -53,8 +57,12 @@ public class Main {
         frame.setTitle("Asteroids");
         gameData = new GameData(800, 600);
         world = new World();
-        gamePlugins = (Collection<IGamePluginService>) getPluginServices();
+
+        // load plugins
+        ModuleLayer layer = createLayer();
+        gamePlugins = getPluginServices(layer);
         for (IGamePluginService gamePlugin : gamePlugins) {
+            System.out.println("Found plugin: " + gamePlugin.getClass().getName());
             gamePlugin.start(gameData, world);
         }
         // print entities
@@ -82,7 +90,16 @@ public class Main {
         }
     }
 
-    private Collection<IGamePluginService> getPluginServices() {
-        return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    private Collection<IGamePluginService> getPluginServices(ModuleLayer layer) {
+        return ServiceLoader.load(layer, IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private ModuleLayer createLayer() {
+        ModuleFinder finder = ModuleFinder.of(Paths.get("mods-mvn2"));
+        List<String> modules = finder.findAll().stream().map(m -> m.descriptor().name()).collect(toList());
+        System.out.println("Modules found: " + modules);
+        Configuration config = ModuleLayer.boot().configuration().resolve(finder, ModuleFinder.of(), modules);
+        ModuleLayer layer = ModuleLayer.boot().defineModulesWithOneLoader(config, ClassLoader.getSystemClassLoader());
+        return layer;
     }
 }
