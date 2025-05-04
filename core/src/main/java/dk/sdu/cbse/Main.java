@@ -2,6 +2,7 @@ package dk.sdu.cbse;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.event.KeyListener;
 import java.lang.module.Configuration;
 import java.lang.module.ModuleFinder;
@@ -30,6 +31,8 @@ public class Main {
     Collection<IGamePluginService> gamePlugins = new ArrayList<>();
 
     public static void main(String[] args) throws InterruptedException {
+        boolean isLinux = System.getProperty("os.name").toLowerCase().contains("linux");
+
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(ModuleConfig.class);
 
         for (String beanName : ctx.getBeanDefinitionNames()) {
@@ -40,6 +43,9 @@ public class Main {
         while (true) {
             main.run();
             main.panel.repaint();
+            if (isLinux) {
+                Toolkit.getDefaultToolkit().sync();
+            }
             Thread.sleep(20);
         }
     }
