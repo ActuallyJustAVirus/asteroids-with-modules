@@ -43,5 +43,9 @@ public class SpaceshipPlugin implements IGamePluginService {
         if (fire) {
             spaceship.fireWeapon();
         }
+        if (keys.isDown(KeyEvent.VK_R)) {
+            world.removeEntity(spaceship);
+            start(gameData, world);
+        }
     }
 }

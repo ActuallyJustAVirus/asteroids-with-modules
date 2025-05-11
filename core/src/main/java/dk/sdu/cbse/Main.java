@@ -71,6 +71,14 @@ public class Main {
         frame.setVisible(true);
         frame.setTitle("Asteroids");
         gameData = new GameData(800, 600);
+
+        frame.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                gameData.setDisplayWidth(frame.getWidth());
+                gameData.setDisplayHeight(frame.getHeight());
+            }
+        });
+
         world = new World();
 
         // load plugins

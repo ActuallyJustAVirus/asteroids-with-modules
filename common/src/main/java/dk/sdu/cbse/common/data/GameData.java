@@ -21,4 +21,12 @@ public class GameData {
     public int getDisplayHeight() {
         return displayHeight;
     }
+    
+    public void setDisplayWidth(int displayWidth) {
+        this.displayWidth = displayWidth;
+    }
+
+    public void setDisplayHeight(int displayHeight) {
+        this.displayHeight = displayHeight;
+    }
 }
