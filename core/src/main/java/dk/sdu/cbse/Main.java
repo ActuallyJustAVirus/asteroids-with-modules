@@ -104,17 +104,4 @@ public class Main {
             plugin.process(gameData, world);
         }
     }
-
-    private Collection<IGamePluginService> getPluginServices(ModuleLayer layer) {
-        return ServiceLoader.load(layer, IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private ModuleLayer createLayer() {
-        ModuleFinder finder = ModuleFinder.of(Paths.get("mods-mvn2"));
-        List<String> modules = finder.findAll().stream().map(m -> m.descriptor().name()).collect(toList());
-        System.out.println("Modules found: " + modules);
-        Configuration config = ModuleLayer.boot().configuration().resolve(finder, ModuleFinder.of(), modules);
-        ModuleLayer layer = ModuleLayer.boot().defineModulesWithOneLoader(config, ClassLoader.getSystemClassLoader());
-        return layer;
-    }
 }
