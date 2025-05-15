@@ -57,6 +57,7 @@ public class EnemyPlugin implements IGamePluginService {
             if (enemy.destroyed) {
                 world.removeEntity(enemy);
                 enemies.remove(enemy);
+                gameData.setScore(gameData.getScore() + 5);
                 i--;
                 continue;
             }

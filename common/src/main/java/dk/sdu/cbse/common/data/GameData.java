@@ -4,6 +4,7 @@ public class GameData {
     private int displayWidth;
     private int displayHeight;
     private GameKeys keys = new GameKeys();
+    private int score;
     
     public GameData(int displayWidth, int displayHeight) {
         this.displayWidth = displayWidth;
@@ -28,5 +29,13 @@ public class GameData {
 
     public void setDisplayHeight(int displayHeight) {
         this.displayHeight = displayHeight;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

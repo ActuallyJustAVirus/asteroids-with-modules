@@ -62,6 +62,9 @@ public class Main {
                     g2d.rotate(entity.rotation);
                     entity.paintComponent(g2d);
                 }
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.drawString("Score: " + gameData.getScore(), 10, 20);
+                g2d.dispose();
             }
         };
         frame = new JFrame();

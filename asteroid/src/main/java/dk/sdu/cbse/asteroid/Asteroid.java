@@ -28,6 +28,7 @@ public class Asteroid extends Entity {
     public void tick(GameData gameData, World world) {
         if (destroyed) {
             plugin.destroyAsteroid(world, this);
+            gameData.setScore(gameData.getScore() + 1);
             return;
         }
         for (Entity entity : world.getEntities()) {
