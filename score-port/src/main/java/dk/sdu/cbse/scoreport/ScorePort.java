@@ -21,9 +21,14 @@ public class ScorePort implements IGamePluginService {
         world.addEntity(highScoreRender);
 
         URI uri = URI.create("http://localhost:8080/highscore");
-        String response = send(uri);
-        highScore = Integer.parseInt(response);
-        highScoreRender.highScore = highScore;
+        String response;
+        try {
+            response = send(uri);
+            highScore = Integer.parseInt(response);
+            highScoreRender.highScore = highScore;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -31,13 +36,18 @@ public class ScorePort implements IGamePluginService {
         if (gameData.getScore() > highScore) {
             int newHighScore = gameData.getScore();
             URI uri = URI.create("http://localhost:8080/newhighscore?score=" + newHighScore);
-            String response = send(uri);
-            if (response.equals("true")) {
-                System.out.println("New high score: " + newHighScore);
-                highScore = newHighScore;
-                highScoreRender.highScore = highScore;
-            } else {
-                System.out.println("Failed to set new high score");
+            String response;
+            try {
+                response = send(uri);
+                if (response.equals("true")) {
+                    System.out.println("New high score: " + newHighScore);
+                    highScore = newHighScore;
+                    highScoreRender.highScore = highScore;
+                } else {
+                    System.out.println("Failed to set new high score");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -47,29 +57,22 @@ public class ScorePort implements IGamePluginService {
         process(gameData, world);
     }
 
-    public String send(URI uri) {
+    public String send(URI uri) throws Exception {
         HttpURLConnection con;
-        try {
-            con = (HttpURLConnection) uri.toURL().openConnection();
-            con.setRequestMethod("GET");
-            int responseCode = con.getResponseCode();
-            if (responseCode != HttpURLConnection.HTTP_OK) {
-                return "GET request not worked";
-            }
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            return response.toString();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        con = (HttpURLConnection) uri.toURL().openConnection();
+        con.setRequestMethod("GET");
+        int responseCode = con.getResponseCode();
+        if (responseCode != HttpURLConnection.HTTP_OK) {
+            throw new IOException("HTTP error code: " + responseCode);
         }
-        return "GET request not worked";
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        return response.toString();
     }
 }
