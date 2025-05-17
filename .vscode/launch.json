@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Highscore Microservice",
+            "request": "launch",
+            "mainClass": "dk.sdu.cbse.microservice.Main",
+            "projectName": "highscore-microservice"
+        },
+        {
+            "type": "java",
             "name": "Attach",
             "request": "attach",
             "hostName": "localhost",
@@ -28,5 +35,12 @@
             "projectName": "core",
             "vmArgs": "--module-path=mods-mvn --module=core/dk.sdu.cbse.Main"
         }
+    ],
+    "compounds": [
+        {
+            "name": "Run All",
+            "configurations": ["Build and run", "Highscore Microservice"],
+            "stopAll": true
+        },
     ]
 }
