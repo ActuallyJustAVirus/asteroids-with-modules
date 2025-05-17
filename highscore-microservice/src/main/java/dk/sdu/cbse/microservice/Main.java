@@ -9,14 +9,24 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 public class Main {
+    private int highscore = 0;
     
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
 
-    @GetMapping("/greet")
-    public String calculateHealt(@RequestParam(value = "name") String name) {
-        return "Hello " + name + "!";
+    @GetMapping("/highscore")
+    public String getHighScore() {
+        return highscore + "";
+    }
+
+    @GetMapping("/newhighscore")
+    public String setHighScore(@RequestParam(value = "score") int score) {
+        boolean isHighscore = score > highscore;
+        if (isHighscore) {
+            highscore = score;
+        }
+        return isHighscore + "";
     }
 
 }

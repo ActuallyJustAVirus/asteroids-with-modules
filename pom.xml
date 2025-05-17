@@ -19,6 +19,7 @@
         <module>cannon</module>
         <module>asteroid2</module>
         <module>highscore-microservice</module>
+        <module>score-port</module>
     </modules>
     <properties>
         <java>java</java>
