@@ -46,6 +46,7 @@ public class SpaceshipPlugin implements IGamePluginService {
         if (keys.isDown(KeyEvent.VK_R)) {
             world.removeEntity(spaceship);
             start(gameData, world);
+            gameData.setScore(0);
         }
     }
 }
