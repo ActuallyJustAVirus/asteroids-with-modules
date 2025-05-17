@@ -18,7 +18,7 @@
         <module>asteroid-splitter</module>
         <module>cannon</module>
         <module>asteroid2</module>
-        <module>microservice</module>
+        <module>highscore-microservice</module>
     </modules>
     <properties>
         <java>java</java>

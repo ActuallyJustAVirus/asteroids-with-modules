@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>dk.sdu.cbse</groupId>
-    <artifactId>microservice</artifactId>
+    <artifactId>highscore-microservice</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
