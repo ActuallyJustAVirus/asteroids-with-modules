@@ -9,16 +9,8 @@ import java.nio.file.Paths;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- *
- * @author jcs
- */
 @Configuration
 class ModuleConfig {
-    
-    public ModuleConfig() {
-    }
-
     @Bean
     public Main Main() {
         return new Main(gamePluginServices());

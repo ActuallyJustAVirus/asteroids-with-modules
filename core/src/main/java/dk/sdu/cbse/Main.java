@@ -85,15 +85,8 @@ public class Main {
         world = new World();
 
         // load plugins
-        // ModuleLayer layer = createLayer();
-        // gamePlugins = getPluginServices(layer);
         for (IGamePluginService gamePlugin : gamePlugins) {
-            System.out.println("Found plugin: " + gamePlugin.getClass().getName());
             gamePlugin.start(gameData, world);
-        }
-        // print entities
-        for (Entity entity : world.getEntities()) {
-            System.out.println(entity);
         }
 
         // add key listener

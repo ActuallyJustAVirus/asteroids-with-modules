@@ -11,9 +11,6 @@ public abstract class Entity {
     public double radius;
     public boolean collidable = true;
 
-    public Entity() {
-        System.out.println("Entity created");
-    }
     public String getID() {
         return ID.toString();
     }
