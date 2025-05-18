@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URI;
 
 import dk.sdu.cbse.common.data.GameData;
@@ -14,18 +13,19 @@ import dk.sdu.cbse.common.service.IGamePluginService;
 public class ScorePort implements IGamePluginService {
     private int highScore = 0;
     private HighScoreRender highScoreRender;
+    private boolean started = false;
 
     @Override
     public void start(GameData gameData, World world) {
-        highScoreRender = new HighScoreRender();
-        world.addEntity(highScoreRender);
-
         URI uri = URI.create("http://localhost:8080/highscore");
         String response;
         try {
             response = send(uri);
             highScore = Integer.parseInt(response);
             highScoreRender.highScore = highScore;
+            highScoreRender = new HighScoreRender();
+            world.addEntity(highScoreRender);
+            started = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,6 +33,9 @@ public class ScorePort implements IGamePluginService {
 
     @Override
     public void process(GameData gameData, World world) {
+        if (!started) {
+            return;
+        }
         if (gameData.getScore() > highScore) {
             int newHighScore = gameData.getScore();
             URI uri = URI.create("http://localhost:8080/newhighscore?score=" + newHighScore);
