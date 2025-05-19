@@ -20,6 +20,7 @@
         <module>asteroid2</module>
         <module>highscore-microservice</module>
         <module>score-port</module>
+        <module>player</module>
     </modules>
     <properties>
         <java>java</java>

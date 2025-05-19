@@ -1,15 +1,16 @@
-package dk.sdu.cbse.spaceship;
+package dk.sdu.cbse.player;
 
 import java.awt.event.KeyEvent;
 import java.util.ServiceLoader;
 
-import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.GameKeys;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
+import dk.sdu.cbse.spaceship.IWeaponService;
+import dk.sdu.cbse.spaceship.Spaceship;
 
-public class SpaceshipPlugin implements IGamePluginService {
+public class PlayerPlugin implements IGamePluginService {
     private Spaceship spaceship;
 
     @Override
