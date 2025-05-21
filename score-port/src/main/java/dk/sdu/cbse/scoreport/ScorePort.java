@@ -1,10 +1,8 @@
 package dk.sdu.cbse.scoreport;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
+
+import org.springframework.web.client.RestTemplate;
 
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
@@ -14,6 +12,7 @@ public class ScorePort implements IGamePluginService {
     private int highScore = 0;
     private HighScoreRender highScoreRender;
     private boolean started = false;
+    private static final RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public void start(GameData gameData, World world) {
@@ -22,8 +21,8 @@ public class ScorePort implements IGamePluginService {
         try {
             response = send(uri);
             highScore = Integer.parseInt(response);
-            highScoreRender.highScore = highScore;
             highScoreRender = new HighScoreRender();
+            highScoreRender.highScore = highScore;
             world.addEntity(highScoreRender);
             started = true;
         } catch (Exception e) {
@@ -61,21 +60,6 @@ public class ScorePort implements IGamePluginService {
     }
 
     public String send(URI uri) throws Exception {
-        HttpURLConnection con;
-        con = (HttpURLConnection) uri.toURL().openConnection();
-        con.setRequestMethod("GET");
-        int responseCode = con.getResponseCode();
-        if (responseCode != HttpURLConnection.HTTP_OK) {
-            throw new IOException("HTTP error code: " + responseCode);
-        }
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-        return response.toString();
+        return restTemplate.getForObject(uri, String.class);
     }
 }
