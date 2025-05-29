@@ -8,7 +8,7 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.service.IGamePluginService;
 
-public class ScorePort implements IGamePluginService {
+public class HighScorePlugin implements IGamePluginService {
     private int highScore = 0;
     private HighScoreRender highScoreRender;
     private boolean started = false;
